@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'RandomWords_Page.dart';
+import 'views/Home_View.dart';
+import 'views/Client_View.dart';
+import 'views/Profile_View.dart';
 
 void main() => runApp(SalesRoute());
 
@@ -18,7 +21,6 @@ class SalesRoute extends StatelessWidget {
 }
 
 class SalesRouteWidget extends StatefulWidget {
-
   @override
   SalesRouteHome createState() => SalesRouteHome();
 }
@@ -26,6 +28,12 @@ class SalesRouteWidget extends StatefulWidget {
 class SalesRouteHome extends State<SalesRouteWidget>{
 
   int _selectedBottomTabIndex = 0;
+
+  final List<Widget> mainViews = [
+    HomeView(),
+    ClientView(),
+    ProfileView()
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +48,7 @@ class SalesRouteHome extends State<SalesRouteWidget>{
           )
         )
       ),
+      body: mainViews[_selectedBottomTabIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem (
@@ -63,12 +72,13 @@ class SalesRouteHome extends State<SalesRouteWidget>{
   }
  
   // Set the selected page view
-  void changeView ( int index){
-  setState((){
-    _selectedBottomTabIndex = index;
-    print("Set view on index " + index.toString());
-  });
-}
+  Widget changeView ( int index){
+    setState((){
+      _selectedBottomTabIndex = index;
+      print("Set view on index " + index.toString());
+    });
+    return new HomeView();
+  }
 }
 
 
