@@ -1,6 +1,8 @@
+import 'dart:async' show Future;
 import 'package:flutter/material.dart';
 
 import '../service/Client_Get.dart';
+import '../data/Client.dart';
 
 class ClientView extends StatefulWidget {
   @override
@@ -8,11 +10,34 @@ class ClientView extends StatefulWidget {
 }
 
 class ClientViewState extends State<ClientView> {
+  
+  String clients = "";
+  ClientViewState() {
+    getClientFromJson().then((val) => setState(() {
+      clients = val;
+    }));
+  }
 
   @override
   Widget build(BuildContext context){
-    return Text('Client');
+    
+    print(clients);
+
+    return ListView.builder(
+      padding: EdgeInsets.all(8.0),
+      itemBuilder: (BuildContext context, int i) {
+
+        return Text('Index $i');
+      },
+    );
   }
 
-  final tempC = getClient();
+  Widget clientRow(Client c){
+    
+    return ListTile(
+      title: Text("Test")
+    );
+  }
+
+  
 }
