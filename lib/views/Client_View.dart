@@ -15,6 +15,7 @@ class ClientViewState extends State<ClientView> {
   Map clients = {};
   List clientList = [];
   int clientListLength = 0;
+  final TextStyle _cFontSize = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
 
   ClientViewState() {
     getClientFromJson().then((val) => setState(() {
@@ -32,8 +33,7 @@ class ClientViewState extends State<ClientView> {
       if (clientListLength!= null){
         // print('TEST:  ${clientList.length}');
         return ListView.builder(
-          padding: EdgeInsets.all(8.0),
-          itemExtent: 20.0,
+          padding: const EdgeInsets.all(10.0),
           itemCount: clientListLength,
           itemBuilder: (BuildContext context, int i) {
             Client c = new Client.fromJson(clientList[i]);
@@ -50,9 +50,24 @@ class ClientViewState extends State<ClientView> {
   Widget clientRow(Client c){
     
     return ListTile(
-      title: Text(c.clientName)
+      leading: CircleAvatar(
+        backgroundImage: NetworkImage(c.clientImg)
+      ),
+      title: Text(
+        c.clientName,
+        style: _cFontSize  
+      ),
+      subtitle: Text(
+        c.location.street
+      ),
+      onTap: (){
+        tempOnTap(c.clientName);
+      },
     );
   }
 
+  tempOnTap(str) {
+    print(str);
+  }
   
 }
