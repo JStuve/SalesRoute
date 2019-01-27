@@ -47,7 +47,7 @@ class ClientViewState extends State<ClientView> {
         onPressed: (){
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ClientEdit(client: Client()))
+            MaterialPageRoute(builder: (context) => ClientEdit(client: Client(), appBarTitle: "New Client"))
           );
         },
       ),
@@ -91,7 +91,7 @@ class ClientViewState extends State<ClientView> {
       onTap: (){
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ClientEdit(client: c))
+          MaterialPageRoute(builder: (context) => ClientEdit(client: c, appBarTitle: "Edit Client",))
         );
       },
     );

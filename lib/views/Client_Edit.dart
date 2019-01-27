@@ -5,8 +5,9 @@ import '../data/Client.dart';
 class ClientEdit extends StatelessWidget {
 
   Client client;
+  String appBarTitle = "Edit Client";
 
-  ClientEdit({Key key, this.client}): super(key: key);
+  ClientEdit({Key key, this.client, @required this.appBarTitle}): super(key: key);
 
   @override
   Widget build(BuildContext context){
@@ -16,7 +17,7 @@ class ClientEdit extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Edit Clients",
+          appBarTitle,
           style: TextStyle(
             fontWeight : FontWeight.bold,
             fontSize: 22,
