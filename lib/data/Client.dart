@@ -5,9 +5,10 @@ class Client {
   Location location = Location();
   String dataSheet = "";
   String clientImg = "";
+  int id = 0;
 
   // Inializing class
-  Client ({this.clientName, this.accountName, this.location, this.dataSheet, this.clientImg});
+  Client ({this.clientName, this.accountName, this.location, this.dataSheet, this.clientImg, this.id});
 
   factory Client.fromJson(Map<String, dynamic> json) {
     return Client(
@@ -15,7 +16,8 @@ class Client {
       accountName: json['accountName'],
       location: Location.fromJson(json['location']),
       dataSheet: json['dataSheet'],
-      clientImg: json['clientImg']
+      clientImg: json['clientImg'],
+      id : json['_id']
     );
   }
 }

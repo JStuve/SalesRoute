@@ -15,6 +15,7 @@ class ClientViewState extends State<ClientView> {
   
   Map clients = {};
   List clientList = [];
+  Set<int> savedClients = new Set<int>();
   int clientListLength = 0;
   Client emptyClient =  Client();
   final TextStyle _cFontSize = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
@@ -76,6 +77,8 @@ class ClientViewState extends State<ClientView> {
 
   Widget clientRow(Client c){
     
+    final bool isSaved = savedClients.contains(c.id);
+
     return ListTile(
       leading: CircleAvatar(
         backgroundImage: NetworkImage(c.clientImg, scale: 2.0),
@@ -88,13 +91,31 @@ class ClientViewState extends State<ClientView> {
       subtitle: Text(
         c.location.street
       ),
-      onTap: (){
+      trailing: Icon(
+        isSaved ? Icons.bookmark : Icons.bookmark_border,
+        color: Colors.tealAccent[700]),
+      onTap: () {
+        print(savedClients);
+
+        setState(() {
+          if(isSaved){
+            savedClients.remove(c.id);
+          } else {
+            savedClients.add(c.id);
+          }
+        });
+      },
+      onLongPress: (){
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => ClientEdit(client: c, appBarTitle: "Edit Client",))
         );
       },
     );
+  }
+
+  void savedClientsList(){
+
   }
 
   tempOnTap(str) {
