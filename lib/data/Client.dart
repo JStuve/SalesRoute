@@ -5,7 +5,7 @@ class Client {
   Location location = Location();
   String dataSheet = "";
   String clientImg = "";
-  int id = 0;
+  String id = "";
 
   // Inializing class
   Client ({this.clientName, this.accountName, this.location, this.dataSheet, this.clientImg, this.id});

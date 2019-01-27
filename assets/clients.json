@@ -1,7 +1,7 @@
 {
     "clients" : [
         {
-            "_id" : 123456789,
+            "_id" : "123456789",
             "clientName" : "Ryan Temporary Name ",
             "accountName" : "Micro Temporary Account",
             "location" : {
@@ -14,7 +14,7 @@
             "clientImg" : "https://ibb.co/tbQYdZR"
         },
         {
-            "_id" : 223456789,
+            "_id" : "223456789",
             "clientName" : "Mike Temporary Name",
             "accountName" : "Apple Temporary Account",
             "location" : {
@@ -27,7 +27,7 @@
             "clientImg" : "https://i.imgur.com/f8TEnwC.jpg"
         },
         {
-            "_id" : 323456789,
+            "_id" : "323456789",
             "clientName" : "John Temporary Name",
             "accountName" : "Apple Temporary Account",
             "location" : {

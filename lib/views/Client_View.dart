@@ -1,9 +1,11 @@
 import 'dart:convert' as JSON;
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../views/Client_Edit.dart';
 import '../service/Client_Get.dart';
+import '../service/Local_Data.dart';
 import '../data/Client.dart';
 
 class ClientView extends StatefulWidget {
@@ -13,12 +15,34 @@ class ClientView extends StatefulWidget {
 
 class ClientViewState extends State<ClientView> {
   
+  
+
   Map clients = {};
   List clientList = [];
-  Set<int> savedClients = new Set<int>();
+  List<String> savedClients = [];
   int clientListLength = 0;
-  Client emptyClient =  Client();
+  var _localSaved;
   final TextStyle _cFontSize = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
+
+  @override
+  void initState() {
+    super.initState();
+    loadSavedClients();
+  }
+
+  loadSavedClients() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      savedClients = (prefs.getStringList('savedClients') ?? savedClients);
+    });
+  }
+
+  saveClients(clients) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      prefs.setStringList('savedClients', clients);
+    });
+  }
 
   ClientViewState() {
     getClientFromJson().then((val) => setState(() {
@@ -95,17 +119,17 @@ class ClientViewState extends State<ClientView> {
         isSaved ? Icons.bookmark : Icons.bookmark_border,
         color: Colors.tealAccent[700]),
       onTap: () {
-        print(savedClients);
-
         setState(() {
           if(isSaved){
             savedClients.remove(c.id);
           } else {
             savedClients.add(c.id);
           }
+          saveClients(savedClients);
         });
       },
       onLongPress: (){
+        print(savedClients);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => ClientEdit(client: c, appBarTitle: "Edit Client",))

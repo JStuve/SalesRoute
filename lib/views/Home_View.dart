@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -7,9 +8,26 @@ class HomeView extends StatefulWidget {
 
 class HomeViewState extends State<HomeView> {
 
+  var savedClients = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadSavedClients();
+  }
+
+  loadSavedClients() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      savedClients = (prefs.getStringList('savedClients') ?? savedClients);
+    });
+  }
+
   @override
   Widget build(BuildContext context){
     
+    print("CLIENTS: ${savedClients}");
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -22,7 +40,7 @@ class HomeViewState extends State<HomeView> {
         ),
         centerTitle: true,
       ),
-      body: Text('Home')
+      body: savedClients.isEmpty ? Text('Nothing Saved') : Text("Clients Saved!")
     );
   }
 }
