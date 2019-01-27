@@ -4,7 +4,7 @@
             "clientName" : "Ryan Temporary Name ",
             "accountName" : "Micro Temporary Account",
             "location" : {
-                "street" : "123 Temporty St",
+                "street" : "123 Temporary St",
                 "city" : "City",
                 "state" : "WA",
                 "zipcode" : "95123"
@@ -16,19 +16,19 @@
             "clientName" : "Mike Temporary Name",
             "accountName" : "Apple Temporary Account",
             "location" : {
-                "street" : "123 Temporty St",
+                "street" : "123 Temporary St",
                 "city" : "City",
                 "state" : "WA",
                 "zipcode" : "95123"
             },
             "dataSheet" : "Coming Soon..",
-            "clientImg" : "https://ibb.co/tbQYdZR"
+            "clientImg" : "https://i.imgur.com/f8TEnwC.jpg"
         },
         {
             "clientName" : "John Temporary Name",
             "accountName" : "Apple Temporary Account",
             "location" : {
-                "street" : "123 Temporty St",
+                "street" : "123 Temporary St",
                 "city" : "City",
                 "state" : "WA",
                 "zipcode" : "95123"

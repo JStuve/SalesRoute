@@ -1,10 +1,10 @@
 class Client {
 
-  final String clientName;
-  final String accountName;
-  final Location location;
-  final String dataSheet;
-  final String clientImg;
+  String clientName;
+  String accountName;
+  Location location;
+  String dataSheet;
+  String clientImg;
 
   // Inializing class
   Client ({this.clientName, this.accountName, this.location, this.dataSheet, this.clientImg});
@@ -18,14 +18,25 @@ class Client {
       clientImg: json['clientImg']
     );
   }
+
+  Client emptyClient(){
+    Client c;
+    Location l;
+    c.clientName = "";
+    c.accountName = "";
+    c.location = l.emptyLocation();
+    c.dataSheet = "";
+    c.dataSheet = "";
+    return c;
+  }
 }
 
 class Location {
   
-  final String street;
-  final String city;
-  final String state;
-  final String zipcode;
+  String street;
+  String city;
+  String state;
+  String zipcode;
 
   Location ({this.street, this.city, this.state, this.zipcode});
 
@@ -36,5 +47,14 @@ class Location {
       state: json['state'],
       zipcode: json['zipcode']
     );
+  }
+
+  Location emptyLocation(){
+    Location l;
+    l.street = "";
+    l.city = "";
+    l.state = "";
+    l.zipcode = "";
+    return l;
   }
 }

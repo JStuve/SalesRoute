@@ -71,16 +71,14 @@ class ClientViewState extends State<ClientView> {
         );
       }
     }
-    else {
-      return Text('Uh Oh...');
-    }
   }
 
   Widget clientRow(Client c){
     
     return ListTile(
       leading: CircleAvatar(
-        backgroundImage: NetworkImage(c.clientImg)
+        backgroundImage: NetworkImage(c.clientImg, scale: 2.0),
+        radius: 30.0,
       ),
       title: Text(
         c.clientName,
