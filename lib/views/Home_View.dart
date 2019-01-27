@@ -9,6 +9,20 @@ class HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context){
-    return Text('Home');
+    
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Sales Routes",
+          style: TextStyle(
+            fontWeight : FontWeight.bold,
+            fontSize: 22,
+            color: Colors.tealAccent[700]
+          )
+        ),
+        centerTitle: true,
+      ),
+      body: Text('Home')
+    );
   }
 }

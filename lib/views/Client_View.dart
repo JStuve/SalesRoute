@@ -2,6 +2,7 @@ import 'dart:convert' as JSON;
 
 import 'package:flutter/material.dart';
 
+import '../views/Client_Edit.dart';
 import '../service/Client_Get.dart';
 import '../data/Client.dart';
 
@@ -26,6 +27,34 @@ class ClientViewState extends State<ClientView> {
   @override
   Widget build(BuildContext context){
     
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Clients",
+          style: TextStyle(
+            fontWeight : FontWeight.bold,
+            fontSize: 22,
+            color: Colors.tealAccent[700]
+          )
+        ),
+        centerTitle: true,
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        backgroundColor: Colors.tealAccent[700],
+        elevation: 2.0,
+        onPressed: (){
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ClientEdit())
+          );
+        },
+      ),
+      body: clientListView()
+    );
+  }
+
+  Widget clientListView(){
     // Pre check to make sure the defualt value is Zero, not Null
     if(clients.isNotEmpty){
       clientList = clients['clients'];
@@ -43,7 +72,7 @@ class ClientViewState extends State<ClientView> {
       }
     }
     else {
-      return Text('Shit...');
+      return Text('Uh Oh...');
     }
   }
 

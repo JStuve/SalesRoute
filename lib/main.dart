@@ -28,6 +28,7 @@ class SalesRouteWidget extends StatefulWidget {
 class SalesRouteHome extends State<SalesRouteWidget>{
 
   int _selectedBottomTabIndex = 0;
+  String appBarTitle = "Sales";
 
   final List<Widget> mainViews = [
     HomeView(),
@@ -38,16 +39,6 @@ class SalesRouteHome extends State<SalesRouteWidget>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Sales",
-          style: TextStyle(
-            fontWeight : FontWeight.bold,
-            fontSize: 28,
-            color: Colors.tealAccent[700]
-          )
-        )
-      ),
       body: mainViews[_selectedBottomTabIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
@@ -61,7 +52,7 @@ class SalesRouteHome extends State<SalesRouteWidget>{
           ),
           BottomNavigationBarItem (
             icon: Icon (Icons.settings),
-            title: Text ('Profile')
+            title: Text ('Settings')
           ),
         ],
         currentIndex: _selectedBottomTabIndex,
@@ -78,6 +69,10 @@ class SalesRouteHome extends State<SalesRouteWidget>{
       print("Set view on index " + index.toString());
     });
     return new HomeView();
+  }
+
+  tempOnTap(str) {
+    print(str);
   }
 }
 
