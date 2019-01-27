@@ -16,6 +16,7 @@ class ClientViewState extends State<ClientView> {
   Map clients = {};
   List clientList = [];
   int clientListLength = 0;
+  Client emptyClient =  Client();
   final TextStyle _cFontSize = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
 
   ClientViewState() {
@@ -46,7 +47,7 @@ class ClientViewState extends State<ClientView> {
         onPressed: (){
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ClientEdit())
+            MaterialPageRoute(builder: (context) => ClientEdit(client: Client()))
           );
         },
       ),
@@ -88,7 +89,10 @@ class ClientViewState extends State<ClientView> {
         c.location.street
       ),
       onTap: (){
-        tempOnTap(c.clientName);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ClientEdit(client: c))
+        );
       },
     );
   }

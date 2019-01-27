@@ -4,16 +4,14 @@ import '../data/Client.dart';
 
 class ClientEdit extends StatelessWidget {
 
-  Client client = Client.newClient();
+  Client client;
 
-  ClientEdit({Key key, this.client});
+  ClientEdit({Key key, this.client}): super(key: key);
 
   @override
   Widget build(BuildContext context){
 
-    if(client == null){
-      this.client.clientName = "No Name";
-    }
+    print(client.clientName);
 
     return Scaffold(
       appBar: AppBar(
@@ -35,7 +33,7 @@ class ClientEdit extends StatelessWidget {
           )
         ],
       ),
-      body: Text(this.client == null ? "Empty" : this.client.clientName),
+      body: Text(client.clientName == null ? "": client.clientName),
       bottomNavigationBar: BottomAppBar(
         child: RaisedButton(
           child: Text(
