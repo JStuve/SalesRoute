@@ -1,11 +1,16 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class LocalData {
 
+  static List<String> savedClients = [];
 
-  loadLocal() async{
-      SharedPreferences _local = await SharedPreferences.getInstance();
-      return _local;
+  static getClients() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    savedClients = prefs.getStringList('savedClients') ?? [];
+  }
+
+  static void setClients(clients) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setStringList('savedClients', clients);
   }
 }

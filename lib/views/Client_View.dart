@@ -19,7 +19,7 @@ class ClientViewState extends State<ClientView> {
 
   Map clients = {};
   List clientList = [];
-  List<String> savedClients = [];
+  var savedClients;
   int clientListLength = 0;
   var _localSaved;
   final TextStyle _cFontSize = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
@@ -27,21 +27,9 @@ class ClientViewState extends State<ClientView> {
   @override
   void initState() {
     super.initState();
-    loadSavedClients();
-  }
-
-  loadSavedClients() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      savedClients = (prefs.getStringList('savedClients') ?? savedClients);
-    });
-  }
-
-  saveClients(clients) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      prefs.setStringList('savedClients', clients);
-    });
+    
+    LocalData.getClients();
+    savedClients = LocalData.savedClients;
   }
 
   ClientViewState() {
@@ -125,7 +113,7 @@ class ClientViewState extends State<ClientView> {
           } else {
             savedClients.add(c.id);
           }
-          saveClients(savedClients);
+          LocalData.setClients(savedClients);
         });
       },
       onLongPress: (){
@@ -136,14 +124,5 @@ class ClientViewState extends State<ClientView> {
         );
       },
     );
-  }
-
-  void savedClientsList(){
-
-  }
-
-  tempOnTap(str) {
-    print(str);
-  }
-  
+  }  
 }
