@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:random_string/random_string.dart' as random;
 
 import '../data/Client.dart';
+
+import '../service/SQL_Data.dart';
 
 class ClientEdit extends StatelessWidget {
 
   Client client;
   String appBarTitle = "Edit Client";
   static GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final bool isNewClient;
 
   // Constructor
-  ClientEdit({Key key, this.client, @required this.appBarTitle}): super(key: key);
+  ClientEdit({Key key, this.client, @required this.appBarTitle, this.isNewClient}): super(key: key);
 
   @override
   Widget build(BuildContext context){
@@ -51,8 +55,12 @@ class ClientEdit extends StatelessWidget {
           padding: const EdgeInsets.all(18.0),
           onPressed: () { 
             if(formKey.currentState.validate()){
-              formKey.currentState.save();
+              formKey.currentState.save(); // Uncomment if you want the form to save if it closes
               // print(formClientName.value);
+              if(isNewClient){
+                this.client.id = random.randomAlphaNumeric(14);
+                Data.db.createClient(client);
+              }
               print(this.client.clientName);
               Navigator.pop(context);
             }
@@ -73,7 +81,7 @@ class ClientEdit extends StatelessWidget {
         padding: EdgeInsets.all(10.0),
         children: <Widget>[
           TextFormField(
-            initialValue: this.client.clientName.isEmpty ? null : this.client.clientName,
+            initialValue: this.client.clientName == null ? null : this.client.clientName,
             decoration: const InputDecoration(
               labelText: "Client Name",
               contentPadding: EdgeInsets.all(20.0)

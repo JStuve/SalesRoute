@@ -1,7 +1,6 @@
 import 'dart:convert' as JSON;
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../views/Client_Edit.dart';
 import '../service/Client_Get.dart';
@@ -15,13 +14,12 @@ class ClientView extends StatefulWidget {
 
 class ClientViewState extends State<ClientView> {
   
-  static Location emptyLocation = new Location(city: "", state: "", street: "", zipcode: "");
-  static Client emptyClient = new Client(accountName: "", clientName: "", clientImg: "", dataSheet: "", id: "", location: emptyLocation);
+  static Location emptyLocation = new Location(city: null, state: null, street: null, zipcode: null);
+  static Client emptyClient = new Client(accountName: null, clientName: null, clientImg: null, dataSheet: null, id: null, location: emptyLocation);
   Map clients = {};
   List clientList = [];
   var savedClients;
   int clientListLength = 0;
-  var _localSaved;
   final TextStyle _cFontSize = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
 
   @override
@@ -64,7 +62,7 @@ class ClientViewState extends State<ClientView> {
         onPressed: (){
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ClientEdit(client: emptyClient, appBarTitle: "New Client"))
+            MaterialPageRoute(builder: (context) => ClientEdit(client: emptyClient, appBarTitle: "New Client", isNewClient: true,))
           );
         },
       ),
