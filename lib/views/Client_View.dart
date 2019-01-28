@@ -15,8 +15,8 @@ class ClientView extends StatefulWidget {
 
 class ClientViewState extends State<ClientView> {
   
-  
-
+  static Location emptyLocation = new Location(city: "", state: "", street: "", zipcode: "");
+  static Client emptyClient = new Client(accountName: "", clientName: "", clientImg: "", dataSheet: "", id: "", location: emptyLocation);
   Map clients = {};
   List clientList = [];
   var savedClients;
@@ -64,7 +64,7 @@ class ClientViewState extends State<ClientView> {
         onPressed: (){
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ClientEdit(client: Client(), appBarTitle: "New Client"))
+            MaterialPageRoute(builder: (context) => ClientEdit(client: emptyClient, appBarTitle: "New Client"))
           );
         },
       ),
