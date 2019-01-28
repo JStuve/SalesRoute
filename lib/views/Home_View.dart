@@ -26,7 +26,7 @@ class HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context){
     
-    print("CLIENTS: ${savedClients}");
+    print("CLIENTS: $savedClients");
 
     return Scaffold(
       appBar: AppBar(
