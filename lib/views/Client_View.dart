@@ -28,11 +28,12 @@ class ClientViewState extends State<ClientView> {
   void initState() {
     super.initState();
     
-    LocalData.getClients();
-    savedClients = LocalData.savedClients;
   }
 
   ClientViewState() {
+    
+    
+
     getClientFromJson().then((val) => setState(() {
       clients = JSON.jsonDecode(val);
     }));
@@ -40,7 +41,10 @@ class ClientViewState extends State<ClientView> {
 
   @override
   Widget build(BuildContext context){
-    
+    // Pulls Saved data from local
+    LocalData.getSavedClients();
+    savedClients = LocalData.savedClients;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -73,8 +77,7 @@ class ClientViewState extends State<ClientView> {
     if(clients.isNotEmpty){
       clientList = clients['clients'];
       clientListLength = clientList.length;
-      if (clientListLength!= null){
-        // print('TEST:  ${clientList.length}');
+      if (clientListLength != null){
         return ListView.builder(
           padding: const EdgeInsets.all(10.0),
           itemCount: clientListLength,
@@ -113,7 +116,7 @@ class ClientViewState extends State<ClientView> {
           } else {
             savedClients.add(c.id);
           }
-          LocalData.setClients(savedClients);
+          LocalData.setSavedClients(savedClients);
         });
       },
       onLongPress: (){
