@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-
 import 'RandomWords_Page.dart';
+
 import 'views/Home_View.dart';
 import 'views/Client_View.dart';
 import 'views/Profile_View.dart';
+import 'service/SQL_Data.dart';
+
 
 void main() => runApp(SalesRoute());
 
@@ -35,6 +37,13 @@ class SalesRouteHome extends State<SalesRouteWidget>{
     ClientView(),
     ProfileView()
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    
+    Data.db.addDemoClient();
+  }
 
   @override
   Widget build(BuildContext context) {

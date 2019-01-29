@@ -28,8 +28,6 @@ class ClientViewState extends State<ClientView> {
 
   ClientViewState() {
     
-    
-
     getClientFromJson().then((val) => setState(() {
       clients = JSON.jsonDecode(val);
     }));

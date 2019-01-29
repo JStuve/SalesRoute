@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:random_string/random_string.dart' as random;
 
 import '../data/Client.dart';
-
 import '../service/SQL_Data.dart';
 
 class ClientEdit extends StatelessWidget {
