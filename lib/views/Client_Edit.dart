@@ -58,7 +58,7 @@ class ClientEdit extends StatelessWidget {
               // print(formClientName.value);
               if(isNewClient){
                 this.client.id = random.randomAlphaNumeric(14);
-                Data.db.createClient(client);
+                // Data.db.createClient(client);
               }
               print(this.client.clientName);
               Navigator.pop(context);

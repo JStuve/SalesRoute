@@ -41,7 +41,7 @@ class Data {
     });
   }
 
-  createClient(Client c) async {
+  createClient(ClientDB c) async {
     final db = await database;
     var res = await db.rawInsert(
       "INSERT Into Clients (id,clientName,accountName,dataSheet,clientImg, lStreet, lCity,lState,lZipcode) "
@@ -62,22 +62,34 @@ class Data {
     );
     return res;
   }
-  
+
+  Future<List<ClientDB>> getClients() async {
+    final db = await database;
+    var res = await db.rawQuery(
+      "SELECT * FROM Clients;"
+    );
+    List<ClientDB> list = res.isNotEmpty ? res.map((c) => ClientDB.fromMap(c)).toList() : []; // Converts all clients into list of clients
+    print("");
+    return list;
+  }
+
   //Adds demo data 
   addDemoClient() async {
-    Location l = Location(
+    LocationDB l = LocationDB(
       street: "355 Conestoga Way",
       city: "San Jose",
       state: "CA",
       zipcode: "95123"
     );
-    Client c = Client(
+    ClientDB c = ClientDB(
       clientName: "Mark Zs",
       accountName: "Chevy Hillside",
       dataSheet: "https://docs.google.com/spreadsheets/d/12tJusL00ncZbd6JX5o30vISKZ7n6Jumxtcruqaw74eg/edit?usp=sharing",
       clientImg: "https://i.imgur.com/VuKnN5P.jpg",
       location: l
     );
+    final dbs = await database;
+    var res = await dbs.rawDelete("DELETE FROM Clients");
     db.createClient(c);
   }
 }

@@ -6,6 +6,7 @@ import '../views/Client_Edit.dart';
 import '../service/Client_Get.dart';
 import '../service/Local_Data.dart';
 import '../data/Client.dart';
+import '../service/SQL_Data.dart';
 
 class ClientView extends StatefulWidget {
   @override
@@ -28,6 +29,8 @@ class ClientViewState extends State<ClientView> {
 
   ClientViewState() {
     
+    var dbClients = Data.db.getClients();
+    print(dbClients);
     getClientFromJson().then((val) => setState(() {
       clients = JSON.jsonDecode(val);
     }));
