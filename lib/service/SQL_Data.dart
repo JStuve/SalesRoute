@@ -48,20 +48,20 @@ class Data {
       "INSERT Into Clients (id,clientName,accountName,dataSheet,clientImg, lStreet, lCity,lState,lZipcode, saved) "
       "SELECT '${c.id}', '${c.clientName}', '${c.accountName}', "
       "'${c.dataSheet}', '${c.clientImg}', '${c.lStreet}', "
-      "'${c.lCity}', '${c.lState}','${c.lZipcode}', '${c.saved}' "
+      "'${c.lCity}', '${c.lState}','${c.lZipcode}', ${c.saved} "
       "WHERE NOT EXISTS (SELECT 1 FROM Clients WHERE id='${c.id}')"
     );
     return res;
   }
 
   updateClient(Client c) async {
-    // final db = await database;
-    // var res = await db.rawUpdate(
-    //   "UPDATE Clients "
-    //   "SET clientName='${c.clientName}', accountName='${c.accountName}', dataSheet='${c.dataSheet}', clientImg='${c.clientImg}', lStreet='${c.location.street}', lCity='${c.location.city}', lState='${c.location.state}', lZipcode='${c.location.zipcode}'"
-    //   "WHERE id='${c.id}'"
-    // );
-    // return res;
+    final db = await database;
+    var res = await db.rawUpdate(
+      "UPDATE Clients "
+      "SET clientName='${c.clientName}', accountName='${c.accountName}', dataSheet='${c.dataSheet}', clientImg='${c.clientImg}', lStreet='${c.lStreet}', lCity='${c.lCity}', lState='${c.lState}', lZipcode='${c.lZipcode}', saved=${c.saved} "
+      "WHERE id='${c.id}'"
+    );
+    return res;
   }
 
   deleteClient(Client c) async {

@@ -60,7 +60,7 @@ class ClientEdit extends StatelessWidget {
                 this.client.id = random.randomAlphaNumeric(14).toString();
                 await Data.db.newClient(client);
               }
-              print(this.client.clientName);
+              await Data.db.updateClient(client);
               Navigator.pop(context);
             }
           }

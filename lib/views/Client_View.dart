@@ -27,7 +27,7 @@ class ClientViewState extends State<ClientView> {
   }
 
   ClientViewState() {
-
+    // Data.db.addDemoClient(); // TEST ONLY: Use to remove all clients expect the demo client
     Data.db.getClients();
   }
 
@@ -142,7 +142,8 @@ class ClientViewState extends State<ClientView> {
       lCity: null,
       lState: null,
       lStreet: null,
-      lZipcode: null);
+      lZipcode: null,
+      saved: 0);
 
     return emptyClient;
   }
