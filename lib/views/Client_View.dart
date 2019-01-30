@@ -111,14 +111,16 @@ class ClientViewState extends State<ClientView> {
         c.lStreet
       ),
       trailing: Icon(
-        c.saved == 1 ? Icons.bookmark : Icons.bookmark_border,
+        c.saved == "Y" ? Icons.bookmark : Icons.bookmark_border,
         color: Colors.tealAccent[700]),
-      onTap: () {
+      onTap: (){
         setState(() {
-          if(c.saved == 0){
-            print("Update DB to Saved");
+          if(c.saved == "Y"){
+            c.saved = "N";
+            Data.db.updateClient(c);
           } else {
-            print("Update DB to NOT Saved");
+            c.saved = "Y";
+            Data.db.updateClient(c);
           }
           LocalData.setSavedClients(savedClients);
         });
@@ -143,7 +145,7 @@ class ClientViewState extends State<ClientView> {
       lState: null,
       lStreet: null,
       lZipcode: null,
-      saved: 0);
+      saved: "N");
 
     return emptyClient;
   }

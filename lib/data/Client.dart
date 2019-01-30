@@ -7,7 +7,7 @@ class Client {
   String accountName = "";
   String dataSheet = "";
   String clientImg = "";
-  int saved = 0;
+  String saved = "";
   String lStreet = "";
   String lCity = "";
   String lState = "";
@@ -36,7 +36,8 @@ class Client {
     lCity: json["lCity"],
     lState: json["lState"],
     lStreet: json["lStreet"],
-    lZipcode: json["lZipcode"] 
+    lZipcode: json["lZipcode"],
+    saved: json["saved"] 
   );
 
   Map<String, dynamic> toMap() => {
@@ -48,7 +49,8 @@ class Client {
     "lCity": lCity,
     "lState": lState,
     "lStreet": lStreet,
-    "lZipcode": lZipcode
+    "lZipcode": lZipcode,
+    "saved" : saved
   };
 }
 
