@@ -12,7 +12,7 @@ class ClientEdit extends StatelessWidget {
   final bool isNewClient;
 
   // Constructor
-  ClientEdit({Key key, this.client, this.isNewClient}): super(key: key);
+  ClientEdit({Key key, this.client, this.isNewClient = false}): super(key: key);
 
   @override
   Widget build(BuildContext context){

@@ -124,11 +124,10 @@ class ClientViewState extends State<ClientView> {
         });
       },
       onLongPress: (){
-        print(savedClients);
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => ClientEdit(client: c, appBarTitle: "Edit Client",))
-        // );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ClientEdit(client: c))
+        );
       },
     );
   }
