@@ -29,6 +29,7 @@ class ClientViewState extends State<ClientView> {
 
   ClientViewState() {
     
+    Data.db.addDemoClient();
     var dbClients = Data.db.getClients();
     print(dbClients);
     getClientFromJson().then((val) => setState(() {
