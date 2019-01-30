@@ -7,7 +7,7 @@ class Client {
   String accountName = "";
   String dataSheet = "";
   String clientImg = "";
-  bool saved = false;
+  int saved = 0;
   String lStreet = "";
   String lCity = "";
   String lState = "";

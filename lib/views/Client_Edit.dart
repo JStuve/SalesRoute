@@ -6,13 +6,13 @@ import '../service/SQL_Data.dart';
 
 class ClientEdit extends StatelessWidget {
 
-  Client client;
-  String appBarTitle = "Edit Client";
+  final Client client;
+  final String appBarTitle = "Client Details";
   static GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final bool isNewClient;
 
   // Constructor
-  ClientEdit({Key key, this.client, @required this.appBarTitle, this.isNewClient}): super(key: key);
+  ClientEdit({Key key, this.client, this.isNewClient}): super(key: key);
 
   @override
   Widget build(BuildContext context){
@@ -52,13 +52,13 @@ class ClientEdit extends StatelessWidget {
           ),
           color: Colors.tealAccent[700],
           padding: const EdgeInsets.all(18.0),
-          onPressed: () { 
+          onPressed: () async{ 
             if(formKey.currentState.validate()){
               formKey.currentState.save(); // Uncomment if you want the form to save if it closes
               // print(formClientName.value);
               if(isNewClient){
-                this.client.id = random.randomAlphaNumeric(14);
-                // Data.db.createClient(client);
+                this.client.id = random.randomAlphaNumeric(14).toString();
+                await Data.db.newClient(client);
               }
               print(this.client.clientName);
               Navigator.pop(context);

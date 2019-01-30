@@ -24,17 +24,11 @@ class ClientViewState extends State<ClientView> {
   @override
   void initState() {
     super.initState();
-    
   }
 
   ClientViewState() {
-    
-    Data.db.addDemoClient();
-    var dbClients = Data.db.getClients();
-    print(dbClients);
-    getClientFromJson().then((val) => setState(() {
-      clients = JSON.jsonDecode(val);
-    }));
+
+    Data.db.getClients();
   }
 
   @override
@@ -62,39 +56,51 @@ class ClientViewState extends State<ClientView> {
         onPressed: (){
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => ClientEdit(client: getEmptyClient(), appBarTitle: "New Client", isNewClient: true,))
+            MaterialPageRoute(builder: (context) => ClientEdit(client: getEmptyClient(), isNewClient: true,))
           );
         },
       ),
-      body: clientListView()
+      body: new Container (
+        child: new FutureBuilder<List<Client>>(
+          future: Data.db.getClients(),
+          builder: (BuildContext context, AsyncSnapshot<List<Client>> snapshot) {
+            if(snapshot.hasData){
+              if(snapshot.data.isNotEmpty){
+                return clientListView(snapshot);
+              }
+            }
+            return Center(child: CircularProgressIndicator());
+          })
+      )
     );
   }
 
-  Widget clientListView(){
-    // Pre check to make sure the defualt value is Zero, not Null
-    if(clients.isNotEmpty){
-      clientList = clients['clients'];
-      clientListLength = clientList.length;
-      if (clientListLength != null){
-        return ListView.builder(
-          padding: const EdgeInsets.all(10.0),
-          itemCount: clientListLength,
-          itemBuilder: (BuildContext context, int i) {
-            Client c = new Client.fromJson(clientList[i]);
-            return clientRow(c);
+  Widget clientListView(AsyncSnapshot<List<Client>> clients){
+    return ListView.builder(
+      itemCount: clients.data.length,
+      itemBuilder: (BuildContext context, int i){
+        Client c = clients.data[i];
+        return Dismissible(
+          key: UniqueKey(),
+          background: Container(color: Colors.red),
+          direction: DismissDirection.horizontal,
+          onDismissed: (direction){
+            Data.db.deleteClient(c);
           },
+          child: clientRow(c)
         );
-      }
-    }
+      },
+    );
   }
 
   Widget clientRow(Client c){
     
-    final bool isSaved = savedClients.contains(c.id);
+  //   final bool isSaved = savedClients.contains(c.id);
 
     return ListTile(
+      contentPadding: const EdgeInsets.all(10.0),
       leading: CircleAvatar(
-        backgroundImage: NetworkImage(c.clientImg, scale: 2.0),
+        // backgroundImage: NetworkImage(c.clientImg, scale: 2.0),
         radius: 30.0,
       ),
       title: Text(
@@ -102,34 +108,43 @@ class ClientViewState extends State<ClientView> {
         style: _cFontSize  
       ),
       subtitle: Text(
-        c.location.street
+        c.lStreet
       ),
       trailing: Icon(
-        isSaved ? Icons.bookmark : Icons.bookmark_border,
+        c.saved == 1 ? Icons.bookmark : Icons.bookmark_border,
         color: Colors.tealAccent[700]),
       onTap: () {
         setState(() {
-          if(isSaved){
-            savedClients.remove(c.id);
+          if(c.saved == 0){
+            print("Update DB to Saved");
           } else {
-            savedClients.add(c.id);
+            print("Update DB to NOT Saved");
           }
           LocalData.setSavedClients(savedClients);
         });
       },
       onLongPress: (){
         print(savedClients);
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ClientEdit(client: c, appBarTitle: "Edit Client",))
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => ClientEdit(client: c, appBarTitle: "Edit Client",))
+        // );
       },
     );
   }
 
   Client getEmptyClient() {
-    Location emptyLocation = new Location(city: null, state: null, street: null, zipcode: null);
-    Client emptyClient = new Client(accountName: null, clientName: null, clientImg: null, dataSheet: null, id: null, location: emptyLocation);
+    Client emptyClient = new Client(
+      accountName: null, 
+      clientName: null, 
+      clientImg: null, 
+      dataSheet: null, 
+      id: null, 
+      lCity: null,
+      lState: null,
+      lStreet: null,
+      lZipcode: null);
+
     return emptyClient;
   }
 }

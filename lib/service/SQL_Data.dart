@@ -37,57 +37,67 @@ class Data {
           "lCity TEXT,"
           "lState TEXT,"
           "lZipcode TEXT,"
-          "saved BOOL"
+          "saved INTEGER"
           ")");
     });
   }
 
-  createClient(Client c) async {
+  newClient(Client c) async {
     final db = await database;
     var res = await db.rawInsert(
-      "INSERT Into Clients (id,clientName,accountName,dataSheet,clientImg, lStreet, lCity,lState,lZipcode) "
+      "INSERT Into Clients (id,clientName,accountName,dataSheet,clientImg, lStreet, lCity,lState,lZipcode, saved) "
       "SELECT '${c.id}', '${c.clientName}', '${c.accountName}', "
-      "'${c.dataSheet}', '${c.clientImg}', '${c.location.street}', "
-      "'${c.location.city}', '${c.location.state}','${c.location.zipcode}' "
+      "'${c.dataSheet}', '${c.clientImg}', '${c.lStreet}', "
+      "'${c.lCity}', '${c.lState}','${c.lZipcode}', '${c.saved}' "
       "WHERE NOT EXISTS (SELECT 1 FROM Clients WHERE id='${c.id}')"
     );
     return res;
   }
 
   updateClient(Client c) async {
+    // final db = await database;
+    // var res = await db.rawUpdate(
+    //   "UPDATE Clients "
+    //   "SET clientName='${c.clientName}', accountName='${c.accountName}', dataSheet='${c.dataSheet}', clientImg='${c.clientImg}', lStreet='${c.location.street}', lCity='${c.location.city}', lState='${c.location.state}', lZipcode='${c.location.zipcode}'"
+    //   "WHERE id='${c.id}'"
+    // );
+    // return res;
+  }
+
+  deleteClient(Client c) async {
     final db = await database;
     var res = await db.rawUpdate(
-      "UPDATE Clients "
-      "SET clientName='${c.clientName}', accountName='${c.accountName}', dataSheet='${c.dataSheet}', clientImg='${c.clientImg}', lStreet='${c.location.street}', lCity='${c.location.city}', lState='${c.location.state}', lZipcode='${c.location.zipcode}'"
+      "DELETE FROM Clients "
       "WHERE id='${c.id}'"
     );
     return res;
   }
 
-  getClients() async {
+  Future<List<Client>> getClients() async {
     final db = await database;
     var res = await db.rawQuery(
       "SELECT * FROM Clients;"
     );
+    List<Client> cList = res.isNotEmpty ? res.map((c) => Client.fromMap(c)).toList() : [];
+    return cList;
   }
 
   //Adds demo data 
   addDemoClient() async {
-    Location l = Location (
-      street: "355 Conestoga Way",
-      city: "San Jose",
-      state: "CA",
-      zipcode: "95123"
-    );
     Client c = Client(
+      id : "zzbbBBshhs882",
       clientName: "Mark Zs",
       accountName: "Chevy Hillside",
       dataSheet: "https://docs.google.com/spreadsheets/d/12tJusL00ncZbd6JX5o30vISKZ7n6Jumxtcruqaw74eg/edit?usp=sharing",
       clientImg: "https://i.imgur.com/VuKnN5P.jpg",
-      location: l
+      lCity: "San Jose",
+      lState: "CA",
+      lStreet: "355 Conestoga Way",
+      lZipcode: "95123",
+      saved: 0
     );
     final dbs = await database;
     var res = await dbs.rawDelete("DELETE FROM Clients");
-    db.createClient(c);
+    db.newClient(c);
   }
 }
