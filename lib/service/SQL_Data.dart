@@ -17,7 +17,6 @@ class Data {
   Future<Database> get database async {
     if(_d == null){
       _d = await initDB();
-      print("DEBUG: NEW DB CREATED");
     }
     return _d;
   }
@@ -80,6 +79,16 @@ class Data {
     );
     List<Client> cList = res.isNotEmpty ? res.map((c) => Client.fromMap(c)).toList() : [];
     return cList;
+  }
+
+  Future<List<Client>> getSavedClients() async {
+    final db = await database;
+    var res = await db.rawQuery(
+      "SELECT * FROM Clients "
+      "WHERE saved='Y'"
+    );
+    List<Client> sList = res.isNotEmpty ? res.map((c) => Client.fromMap(c)).toList() : [];
+    return sList;
   }
 
   //Adds demo data 

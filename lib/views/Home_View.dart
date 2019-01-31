@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../service/SQL_Data.dart';
+import '../data/Client.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -8,26 +10,15 @@ class HomeView extends StatefulWidget {
 
 class HomeViewState extends State<HomeView> {
 
-  var savedClients = [];
+  final TextStyle _cFontSize = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
 
   @override
   void initState() {
     super.initState();
-    loadSavedClients();
-  }
-
-  loadSavedClients() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      savedClients = (prefs.getStringList('savedClients') ?? savedClients);
-    });
   }
 
   @override
   Widget build(BuildContext context){
-    
-    print("CLIENTS: $savedClients");
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -40,7 +31,60 @@ class HomeViewState extends State<HomeView> {
         ),
         centerTitle: true,
       ),
-      body: savedClients.isEmpty ? Text('Nothing Saved') : Text("Clients Saved!")
+      body: new Container (
+        child: new FutureBuilder<List<Client>>(
+          future: Data.db.getSavedClients(),
+          builder: (BuildContext context, AsyncSnapshot<List<Client>> snapshot) {
+            if(snapshot.hasData){
+              if(snapshot.data.isNotEmpty){
+                return savedClientListView(snapshot);
+              }
+            }
+            return Center(child: CircularProgressIndicator());
+          })
+      )
+    );
+  }
+
+  Widget savedClientListView(AsyncSnapshot<List<Client>> clients){
+    return ListView.builder(
+      itemCount: clients.data.length,
+      itemBuilder: (BuildContext context, int i){
+        Client c = clients.data[i];
+        return Dismissible(
+          key: UniqueKey(),
+          background: Container(color: Colors.red),
+          direction: DismissDirection.horizontal,
+          onDismissed: (direction){
+            Data.db.deleteClient(c);
+          },
+          child: savedClientRow(c)
+        );
+      },
+    );
+  }
+
+  Widget savedClientRow(Client c){
+    
+    return ListTile(
+      contentPadding: const EdgeInsets.all(10.0),
+      leading: CircleAvatar(
+        backgroundImage: NetworkImage(c.clientImg, scale: 2.0),
+        radius: 30.0,
+      ),
+      title: Text(
+        c.clientName,
+        style: _cFontSize  
+      ),
+      subtitle: Text(
+        c.lStreet
+      ),
+      onTap: (){
+        print("TODO: No design for tap on home...");
+      },
+      onLongPress: (){
+        print("TODO: Nothing planned for long pressed on home...");
+      },
     );
   }
 }

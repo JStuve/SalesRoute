@@ -1,9 +1,6 @@
-import 'dart:convert' as JSON;
-
 import 'package:flutter/material.dart';
 
 import '../views/Client_Edit.dart';
-import '../service/Client_Get.dart';
 import '../service/Local_Data.dart';
 import '../data/Client.dart';
 import '../service/SQL_Data.dart';
@@ -101,7 +98,7 @@ class ClientViewState extends State<ClientView> {
     return ListTile(
       contentPadding: const EdgeInsets.all(10.0),
       leading: CircleAvatar(
-        // backgroundImage: NetworkImage(c.clientImg, scale: 2.0),
+        backgroundImage: NetworkImage(c.clientImg, scale: 2.0),
         radius: 30.0,
       ),
       title: Text(
@@ -123,7 +120,6 @@ class ClientViewState extends State<ClientView> {
             c.saved = "Y";
             Data.db.updateClient(c);
           }
-          LocalData.setSavedClients(savedClients);
         });
       },
       onLongPress: (){

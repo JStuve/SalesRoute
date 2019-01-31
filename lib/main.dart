@@ -41,6 +41,7 @@ class SalesRouteHome extends State<SalesRouteWidget>{
   @override
   void initState() {
     super.initState();
+    Data.db.getClients();
   }
 
   @override
