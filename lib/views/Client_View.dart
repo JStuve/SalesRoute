@@ -26,9 +26,8 @@ class ClientViewState extends State<ClientView> {
     super.initState();
   }
 
-  ClientViewState() {
+  ClientViewState(){
     // Data.db.addDemoClient(); // TEST ONLY: Use to remove all clients expect the demo client
-    Data.db.getClients();
   }
 
   @override
