@@ -37,7 +37,7 @@ class Data {
           "lCity TEXT,"
           "lState TEXT,"
           "lZipcode TEXT,"
-          "saved INTEGER"
+          "saved TEXT"
           ")");
     });
   }
@@ -99,5 +99,13 @@ class Data {
     final dbs = await database;
     var res = await dbs.rawDelete("DELETE FROM Clients");
     db.newClient(c);
+  }
+
+  deleteTable(String tableName) async{
+    final db = await database;
+    var res = await db.rawQuery(
+      "DELETE FROM $tableName"
+    );
+    print("TABLE [$tableName] DELETED!");
   }
 }
