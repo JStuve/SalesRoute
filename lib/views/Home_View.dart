@@ -13,6 +13,7 @@ class HomeViewState extends State<HomeView> {
 
   final TextStyle _cFontSize = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
   Position pos;
+  List<Placemark> place;
   Geolocator geo = new Geolocator();
 
   @override
@@ -21,13 +22,15 @@ class HomeViewState extends State<HomeView> {
 
     
     getLocation();
+    // List<Placemark> place = geo.placemarkFromCoordinates(pos.latitude, pos.longitude);
   }
 
   getLocation() async {
     GeolocationStatus locStatus = await geo.checkGeolocationPermissionStatus();
     if(locStatus == GeolocationStatus.granted){
-      pos = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
-      print(pos);
+      pos = await geo.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+      place = await geo.placemarkFromCoordinates(pos.latitude, pos.longitude);
+      print(place);
     }
     else {
       print("Still no status");
