@@ -74,7 +74,6 @@ class SalesRouteHome extends State<SalesRouteWidget>{
   Widget changeView ( int index){
     setState((){
       _selectedBottomTabIndex = index;
-      print("Set view on index " + index.toString());
     });
     return new HomeView();
   }

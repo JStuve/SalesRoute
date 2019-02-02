@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:geolocator/geolocator.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../service/SQL_Data.dart';
 import '../data/Client.dart';
@@ -12,18 +12,27 @@ class HomeView extends StatefulWidget {
 class HomeViewState extends State<HomeView> {
 
   final TextStyle _cFontSize = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
-  // Position pos;
+  Position pos;
+  Geolocator geo = new Geolocator();
 
   @override
   void initState() {
     super.initState();
-    // getLocation();
+
+    
+    getLocation();
   }
 
-  // getLocation() async {
-  //   pos = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
-  //   print(pos);
-  // }
+  getLocation() async {
+    GeolocationStatus locStatus = await geo.checkGeolocationPermissionStatus();
+    if(locStatus == GeolocationStatus.granted){
+      pos = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+      print(pos);
+    }
+    else {
+      print("Still no status");
+    }
+  }
 
   @override
   Widget build(BuildContext context){
