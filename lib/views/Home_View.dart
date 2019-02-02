@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+// import 'package:geolocator/geolocator.dart';
 
 import '../service/SQL_Data.dart';
 import '../data/Client.dart';
@@ -12,18 +12,18 @@ class HomeView extends StatefulWidget {
 class HomeViewState extends State<HomeView> {
 
   final TextStyle _cFontSize = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
-  Position pos;
+  // Position pos;
 
   @override
   void initState() {
     super.initState();
-    getLocation();
+    // getLocation();
   }
 
-  getLocation() async {
-    pos = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
-    print(pos);
-  }
+  // getLocation() async {
+  //   pos = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+  //   print(pos);
+  // }
 
   @override
   Widget build(BuildContext context){
