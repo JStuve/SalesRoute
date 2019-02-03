@@ -93,6 +93,36 @@ class ClientEdit extends StatelessWidget {
                 return "Please enter client name";
               }
             },
+          ),
+          TextFormField(
+            initialValue: this.client.accountName == null ? null : this.client.accountName,
+            decoration: const InputDecoration(
+              labelText: "Account Name",
+              contentPadding: EdgeInsets.all(20.0)
+            ),
+            onSaved: (String value){
+              this.client.accountName = value;
+            },
+            validator: (value){
+              if (value.isEmpty) {
+                return "Please enter client name";
+              }
+            },
+          ),
+          TextFormField(
+            initialValue: this.client.dataSheet == null ? null : this.client.dataSheet,
+            decoration: const InputDecoration(
+              labelText: "Datasheet",
+              contentPadding: EdgeInsets.all(20.0)
+            ),
+            onSaved: (String value){
+              this.client.dataSheet = value;
+            },
+            validator: (value){
+              if (value.isEmpty) {
+                return "Please enter client name";
+              }
+            },
           )
         ],
       )
