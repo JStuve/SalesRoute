@@ -27,7 +27,7 @@ class HomeViewState extends State<HomeView> {
 
   getLocation() async {
     GeolocationStatus locStatus = await geo.checkGeolocationPermissionStatus();
-    if(locStatus == GeolocationStatus.granted){
+    if(locStatus != GeolocationStatus.granted){
       pos = await geo.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
       place = await geo.placemarkFromCoordinates(pos.latitude, pos.longitude);
       print(place);
