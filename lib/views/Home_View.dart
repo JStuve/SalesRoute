@@ -136,7 +136,8 @@ class HomeViewState extends State<HomeView> {
     String clientAddress = c.lStreet + ' ' + c.lCity + ' ' + c.lState + ' ' + c.lZipcode;
     List<Placemark> clientCords =  await Geolocator().placemarkFromAddress(clientAddress);
     double metersBetweenClient = await Geolocator().distanceBetween(currentLocation.latitude, currentLocation.longitude, clientCords[0].position.latitude, clientCords[0].position.longitude);
-    print(metersBetweenClient.toStringAsFixed(2));
+    double miles = metersBetweenClient * 0.000621;
+    print(miles.toStringAsFixed(1));
   }
 
 }
