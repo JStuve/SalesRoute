@@ -93,7 +93,7 @@ class Data {
 
   //Adds demo data 
   addDemoClient() async {
-    Client c = Client(
+    Client c0 = Client(
       id : "zzbbBBshhs882",
       clientName: "Mark Zs",
       accountName: "Chevy Hillside",
@@ -105,9 +105,37 @@ class Data {
       lZipcode: "95123",
       saved: "N"
     );
+    Client c1 = Client(
+      id : "zzbbBBshhss82",
+      clientName: "Daddy Zs",
+      accountName: "Chevy Hillside",
+      dataSheet: "https://docs.google.com/spreadsheets/d/12tJusL00ncZbd6JX5o30vISKZ7n6Jumxtcruqaw74eg/edit?usp=sharing",
+      clientImg: "https://i.imgur.com/VuKnN5P.jpg",
+      lCity: "Irving",
+      lState: "TX",
+      lStreet: "7112 Paluxy Dr",
+      lZipcode: "75039",
+      saved: "N"
+    );
+    Client c2 = Client(
+      id : "zzbbBBshaahs882",
+      clientName: "Zaddy Zs",
+      accountName: "Chevy Hillside",
+      dataSheet: "https://docs.google.com/spreadsheets/d/12tJusL00ncZbd6JX5o30vISKZ7n6Jumxtcruqaw74eg/edit?usp=sharing",
+      clientImg: "https://i.imgur.com/VuKnN5P.jpg",
+      lCity: "Irving",
+      lState: "TX",
+      lStreet: "315 San Marcos Dr",
+      lZipcode: "75039",
+      saved: "N"
+    );
+
+    
     final dbs = await database;
     var res = await dbs.rawDelete("DELETE FROM Clients");
-    db.newClient(c);
+    db.newClient(c0);
+    db.newClient(c1);
+    db.newClient(c2);
   }
 
   deleteTable(String tableName) async{
