@@ -27,17 +27,17 @@ class HomeViewState extends State<HomeView> {
     
     getLocation();
 
-    // locationSub = geo.getPositionStream(locationOptions).listen((Position position) {
-    //   setState(() {
-    //     print("WE ARE LISTENING");
-    //     if(position != null){
-    //       currentLocation = position;
-    //       print("POSITION: " + currentLocation.toString());
-    //     } else {
-    //       print("Position Unknown");
-    //     }
-    //   });
-    // }); 
+    locationSub = geo.getPositionStream(locationOptions).listen((Position position) {
+      setState(() {
+        print("WE ARE LISTENING");
+        if(position != null){
+          currentLocation = position;
+          print("POSITION: " + currentLocation.toString());
+        } else {
+          print("Position Unknown");
+        }
+      });
+    }); 
   }
 
   // UI
@@ -106,13 +106,12 @@ class HomeViewState extends State<HomeView> {
       ),
       onTap: (){
         print("TODO: No design for tap on home...");
-        print(currentLocation);
+        calculateDistance(c);
       },
       onLongPress: (){
         print("TODO: Nothing planned for long pressed on home...");
       },
-      trailing: Text(calculateDistance(c),
-      ),
+      trailing: Text("Test")
     );
   }
 
@@ -132,9 +131,12 @@ class HomeViewState extends State<HomeView> {
     } 
   }
 
-  String calculateDistance(Client c){
+  calculateDistance(Client c) async{
     
-    return '0.0';
+    String clientAddress = c.lStreet + ' ' + c.lCity + ' ' + c.lState + ' ' + c.lZipcode;
+    List<Placemark> clientCords =  await Geolocator().placemarkFromAddress(clientAddress);
+    double metersBetweenClient = await Geolocator().distanceBetween(currentLocation.latitude, currentLocation.longitude, clientCords[0].position.latitude, clientCords[0].position.longitude);
+    print(metersBetweenClient.toStringAsFixed(2));
   }
 
 }
