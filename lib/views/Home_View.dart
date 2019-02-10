@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'dart:async';
 
 import '../service/SQL_Data.dart';
 import '../data/Client.dart';
@@ -14,7 +15,10 @@ class HomeViewState extends State<HomeView> {
   final TextStyle _cFontSize = const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold);
   Position pos;
   List<Placemark> place;
-  Geolocator geo = new Geolocator();
+  Position currentLocation;
+  static Geolocator geo = new Geolocator();
+  static LocationOptions locationOptions = LocationOptions(accuracy: LocationAccuracy.best);
+  StreamSubscription<Position> locationSub;
 
   @override
   void initState() {
@@ -22,21 +26,21 @@ class HomeViewState extends State<HomeView> {
 
     
     getLocation();
-    // List<Placemark> place = geo.placemarkFromCoordinates(pos.latitude, pos.longitude);
+
+    // locationSub = geo.getPositionStream(locationOptions).listen((Position position) {
+    //   setState(() {
+    //     print("WE ARE LISTENING");
+    //     if(position != null){
+    //       currentLocation = position;
+    //       print("POSITION: " + currentLocation.toString());
+    //     } else {
+    //       print("Position Unknown");
+    //     }
+    //   });
+    // }); 
   }
 
-  getLocation() async {
-    GeolocationStatus locStatus = await geo.checkGeolocationPermissionStatus();
-    if(locStatus == GeolocationStatus.granted){
-      pos = await geo.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
-      place = await geo.placemarkFromCoordinates(pos.latitude, pos.longitude);
-      print(place);
-    }
-    else {
-      print("Still no status");
-    }
-  }
-
+  // UI
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -66,6 +70,7 @@ class HomeViewState extends State<HomeView> {
     );
   }
 
+  // TODO: Remove Dismissible || Change to unsave
   Widget savedClientListView(AsyncSnapshot<List<Client>> clients){
     return ListView.builder(
       itemCount: clients.data.length,
@@ -101,10 +106,35 @@ class HomeViewState extends State<HomeView> {
       ),
       onTap: (){
         print("TODO: No design for tap on home...");
+        print(currentLocation);
       },
       onLongPress: (){
         print("TODO: Nothing planned for long pressed on home...");
       },
+      trailing: Text(calculateDistance(c),
+      ),
     );
   }
+
+  // HELPER FUNCTIONS
+
+  
+
+  getLocation() async {
+    GeolocationStatus locStatus = await geo.checkGeolocationPermissionStatus();
+    if(locStatus == GeolocationStatus.granted){
+      pos = await geo.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+      place = await geo.placemarkFromCoordinates(pos.latitude, pos.longitude);
+      print(place);
+    }
+    else {
+      print("Still no status");
+    } 
+  }
+
+  String calculateDistance(Client c){
+    
+    return '0.0';
+  }
+
 }
