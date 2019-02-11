@@ -28,6 +28,7 @@ class HomeViewState extends State<HomeView> {
     getLocation();
 
     locationSub = geo.getPositionStream(locationOptions).listen((Position position) {
+      print("LISTENING FOR LOCATION");
       setState(() {
         print("WE ARE LISTENING");
         if(position != null){
@@ -111,7 +112,20 @@ class HomeViewState extends State<HomeView> {
       onLongPress: (){
         print("TODO: Nothing planned for long pressed on home...");
       },
-      trailing: Text("Test")
+      trailing: FutureBuilder<String>(
+        future: calculateDistance(c),
+        builder: (BuildContext context, AsyncSnapshot<String> snapshot){
+          if(snapshot.hasData){
+            if(snapshot.data == null){
+              return Text("00.0"); // No current location is found
+            } else {
+              return Text(snapshot.data);
+            }
+          } else {
+            return Text("N/A");
+          }
+        },
+      )
     );
   }
 
@@ -131,13 +145,17 @@ class HomeViewState extends State<HomeView> {
     } 
   }
 
-  calculateDistance(Client c) async{
+  Future<String> calculateDistance(Client c) async{
     
     String clientAddress = c.lStreet + ' ' + c.lCity + ' ' + c.lState + ' ' + c.lZipcode;
     List<Placemark> clientCords =  await Geolocator().placemarkFromAddress(clientAddress);
-    double metersBetweenClient = await Geolocator().distanceBetween(currentLocation.latitude, currentLocation.longitude, clientCords[0].position.latitude, clientCords[0].position.longitude);
-    double miles = metersBetweenClient * 0.000621;
-    print(miles.toStringAsFixed(1));
+    if(currentLocation != null){
+      double metersBetweenClient = await Geolocator().distanceBetween(currentLocation.latitude, currentLocation.longitude, clientCords[0].position.latitude, clientCords[0].position.longitude);
+      double miles = metersBetweenClient * 0.000621;
+      return miles.toStringAsFixed(1);
+    } else {
+      return null;
+    }
   }
 
 }
