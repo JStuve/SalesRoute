@@ -142,7 +142,8 @@ class ClientViewState extends State<ClientView> {
       lState: null,
       lStreet: null,
       lZipcode: null,
-      saved: "N");
+      saved: "N",
+      distance: "0.0");
 
     return emptyClient;
   }

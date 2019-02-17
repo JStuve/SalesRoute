@@ -76,6 +76,7 @@ class HomeViewState extends State<HomeView> {
     return ListView.builder(
       itemCount: clients.data.length,
       itemBuilder: (BuildContext context, int i){
+        clients.data.sort((a,b) => double.parse(a.distance).compareTo(double.parse(b.distance))); // Sort client list by distance
         Client c = clients.data[i];
         return Dismissible(
           key: UniqueKey(),
@@ -119,10 +120,12 @@ class HomeViewState extends State<HomeView> {
             if(snapshot.data == null){
               return Text("00.0"); // No current location is found
             } else {
+              c.distance = snapshot.data;
+              Data.db.updateClient(c);
               return Text(snapshot.data);
             }
           } else {
-            return Text("N/A");
+            return Text(c.distance); // Set distance if current location has not changed
           }
         },
       )

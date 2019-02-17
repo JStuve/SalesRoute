@@ -17,6 +17,7 @@ class Data {
   Future<Database> get database async {
     if(_d == null){
       _d = await initDB();
+      print("DB Recreated!");
     }
     return _d;
   }
@@ -36,7 +37,8 @@ class Data {
           "lCity TEXT,"
           "lState TEXT,"
           "lZipcode TEXT,"
-          "saved TEXT"
+          "saved TEXT,"
+          "distance TEXT"
           ")");
     });
   }
@@ -44,10 +46,10 @@ class Data {
   newClient(Client c) async {
     final db = await database;
     var res = await db.rawInsert(
-      "INSERT Into Clients (id,clientName,accountName,dataSheet,clientImg, lStreet, lCity,lState,lZipcode, saved) "
+      "INSERT Into Clients (id,clientName,accountName,dataSheet,clientImg, lStreet, lCity,lState,lZipcode, saved, distance) "
       "SELECT '${c.id}', '${c.clientName}', '${c.accountName}', "
       "'${c.dataSheet}', '${c.clientImg}', '${c.lStreet}', "
-      "'${c.lCity}', '${c.lState}','${c.lZipcode}', '${c.saved}' "
+      "'${c.lCity}', '${c.lState}','${c.lZipcode}', '${c.saved}', '${c.distance}' "
       "WHERE NOT EXISTS (SELECT 1 FROM Clients WHERE id='${c.id}')"
     );
     return res;
@@ -57,7 +59,7 @@ class Data {
     final db = await database;
     var res = await db.rawUpdate(
       "UPDATE Clients "
-      "SET clientName='${c.clientName}', accountName='${c.accountName}', dataSheet='${c.dataSheet}', clientImg='${c.clientImg}', lStreet='${c.lStreet}', lCity='${c.lCity}', lState='${c.lState}', lZipcode='${c.lZipcode}', saved='${c.saved}' "
+      "SET clientName='${c.clientName}', accountName='${c.accountName}', dataSheet='${c.dataSheet}', clientImg='${c.clientImg}', lStreet='${c.lStreet}', lCity='${c.lCity}', lState='${c.lState}', lZipcode='${c.lZipcode}', saved='${c.saved}', distance='${c.distance}' "
       "WHERE id='${c.id}'"
     );
     return res;
@@ -103,7 +105,8 @@ class Data {
       lState: "CA",
       lStreet: "355 Conestoga Way",
       lZipcode: "95123",
-      saved: "N"
+      saved: "N",
+      distance: "0.0"
     );
     Client c1 = Client(
       id : "zzbbBBshhss82",
@@ -115,7 +118,8 @@ class Data {
       lState: "TX",
       lStreet: "7112 Paluxy Dr",
       lZipcode: "75039",
-      saved: "N"
+      saved: "N",
+      distance: "0.0"
     );
     Client c2 = Client(
       id : "zzbbBBshaahs882",
@@ -127,7 +131,8 @@ class Data {
       lState: "TX",
       lStreet: "315 San Marcos Dr",
       lZipcode: "75039",
-      saved: "N"
+      saved: "N",
+      distance: "0.0"
     );
 
     

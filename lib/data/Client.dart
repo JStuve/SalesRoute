@@ -12,6 +12,7 @@ class Client {
   String lCity = "";
   String lState = "";
   String lZipcode = "";
+  String distance = "";
 
   // Inializing class
   Client ({
@@ -24,7 +25,8 @@ class Client {
     this.lStreet,
     this.lCity,
     this.lState,
-    this.lZipcode
+    this.lZipcode,
+    this.distance
   });
 
   factory Client.fromMap(Map<String, dynamic> json) => new Client(
@@ -37,7 +39,8 @@ class Client {
     lState: json["lState"],
     lStreet: json["lStreet"],
     lZipcode: json["lZipcode"],
-    saved: json["saved"] 
+    saved: json["saved"],
+    distance: json["distance"]
   );
 
   Map<String, dynamic> toMap() => {
@@ -50,7 +53,8 @@ class Client {
     "lState": lState,
     "lStreet": lStreet,
     "lZipcode": lZipcode,
-    "saved" : saved
+    "saved" : saved,
+    "distance" : distance
   };
 }
 
