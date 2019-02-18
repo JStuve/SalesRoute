@@ -71,7 +71,6 @@ class ClientEdit extends StatelessWidget {
     );
   }
 
-
   Widget clientForm(){
 
     return Form(
@@ -123,6 +122,70 @@ class ClientEdit extends StatelessWidget {
                 return "Please enter client name";
               }
             },
+          ),
+          TextFormField(
+            initialValue: this.client.lStreet == null ? null : this.client.lStreet,
+            decoration: const InputDecoration(
+              labelText: "Address",
+              contentPadding: EdgeInsets.all(20.0)
+            ),
+            onSaved: (String value){
+              this.client.lStreet = value;
+            },
+            validator: (value){
+              if (value.isEmpty) {
+                return "Please enter client name";
+              }
+            },
+          ),
+          Column(
+            children: <Widget>[
+              TextFormField(
+                initialValue: this.client.lCity == null ? null : this.client.lCity,
+                decoration: const InputDecoration(
+                  labelText: "City",
+                  contentPadding: EdgeInsets.all(20.0)
+                ),
+                onSaved: (String value){
+                  this.client.lCity = value;
+                },
+                validator: (value){
+                  if (value.isEmpty) {
+                    return "Please enter client name";
+                  }
+                },
+              ),
+              TextFormField(
+                initialValue: this.client.lZipcode == null ? null : this.client.lZipcode,
+                decoration: const InputDecoration(
+                  labelText: "Zipcode",
+                  contentPadding: EdgeInsets.all(20.0)
+                ),
+                onSaved: (String value){
+                  this.client.lZipcode = value;
+                },
+                validator: (value){
+                  if (value.isEmpty) {
+                    return "Please enter client name";
+                  }
+                },
+              ),
+              TextFormField(
+                initialValue: this.client.lState == null ? null : this.client.lState,
+                decoration: const InputDecoration(
+                  labelText: "State",
+                  contentPadding: EdgeInsets.all(20.0)
+                ),
+                onSaved: (String value){
+                  this.client.lState = value;
+                },
+                validator: (value){
+                  if (value.isEmpty) {
+                    return "Please enter client name";
+                  }
+                },
+              )
+            ]
           )
         ],
       )
